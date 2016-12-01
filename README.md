@@ -55,6 +55,9 @@ Reduces the content passed in by any content that has been delimited by `opening
 - minContentLen {Number=1}
 - aggregator {Object={}}
 
+#### Returns:
+`{difference: {String}, extracted: {Array}}`
+
 #### Usage:
 ```
 var openDelim = '<!-- someDelimiter -->',
