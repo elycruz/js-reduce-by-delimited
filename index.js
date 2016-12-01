@@ -5,16 +5,30 @@
 
     'use strict';
 
+    // Defaults
     var isNodeEnv = typeof window === 'undefined' && global,
         sjl = isNodeEnv ? require('sjljs') : window.sjl, __ = sjl._,
         valueOrDefault = sjl.valueOrDefault,
 
+        /**
+         * Checks for closing and opening delimiter.
+         * @param content {String}
+         * @param minDelimitedContentLen {Number}
+         * @param openDelim {String}
+         * @param closingDelim {String}
+         * @returns {Boolean}
+         */
         hasOpeningAndClosingDelim = sjl.curry3(function (content, openDelim, closingDelim, minDelimitedContentLen) {
             minDelimitedContentLen = valueOrDefault(minDelimitedContentLen, 1, Number);
             return (content.indexOf(openDelim) > -1 ||
             content.indexOf(closingDelim) > (openDelim.length + minDelimitedContentLen));
         }),
 
+        /**
+         * Ensures expected aggregator interface.
+         * @param aggregator
+         * @returns {*}
+         */
         normalizeAggregator = function (aggregator) {
             if (!aggregator.hasOwnProperty('difference')) {
                 aggregator.difference = '';
@@ -25,6 +39,16 @@
             return aggregator;
         },
 
+        /**
+         * Reduction call.
+         * @param content {String}
+         * @param openDelim {String}
+         * @param closingDelim {String}
+         * @param keepDelimInExtracted {String}
+         * @param minDelimitedContentLen [Number=1] - Minimal length of delimited content.  Optional.
+         * @param aggregatorLike [Object={}] - Used internally.  Optional.
+         * @returns {Boolean}
+         */
         reduceByDelimitedContent = sjl.curry3(function (content, openingDelimiter, closingDelimiter, keepDelimInExtracted, minDelimitedContentLen, aggregatorLike) {
             keepDelimInExtracted = valueOrDefault(keepDelimInExtracted, false),
             minDelimitedContentLen = valueOrDefault(minDelimitedContentLen, 1, Number);
@@ -62,6 +86,7 @@
             return aggregator;
         }),
 
+        // Module to export
         reduceByDelimited = {
             hasOpeningAndClosingDelim: hasOpeningAndClosingDelim,
             normalizeAggregator: normalizeAggregator,
@@ -76,6 +101,7 @@
             __: __ // ""
         };
 
+    // Exports
     if (isNodeEnv) {
         module.exports = reduceByDelimited;
     }

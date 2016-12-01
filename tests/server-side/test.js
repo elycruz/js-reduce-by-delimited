@@ -1,17 +1,16 @@
 /**
  * Created by elyde on 12/1/2016.
  */
-
-'use strict';
-
 describe('reduce-by-delimited', function () {
+
+    'use strict';
+
     let fs = require('fs'),
         path = require('path'),
         sjl = require('sjljs'),
         chai = require('chai'),
         assert = chai.assert,
         expect = chai.expect,
-        log = console.log.bind(console),
         exampleContentDir = path.join(__dirname, '/../example-data/'),
         rbd = require('../../index'),
         __ = rbd.__,
@@ -34,18 +33,19 @@ describe('reduce-by-delimited', function () {
             'reduceByDelimited',
             'reduceByDelimitedC4',
             'reduceByDelimitedC5',
-        ],
-        propNames = [
-            'fnPlaceHolder',
-            '__'
         ];
 
-    // fs.createReadStream('../example-data/example-body-content.html')
-    //     .pipe()
-
-    // Insure required interface
+    // Ensure required interface
     interfaceNames.forEach(function (methodName) {
         shouldBeAFunction('#' + methodName, rbd[methodName]);
+    });
+
+    // Ensure required properties
+    describe ('#fnPlaceHolder && #__', function () {
+        it ('should be equal to `sjl._` (sjl\'s placeholder).', function () {
+            expect(rbd.fnPlaceholder).to.equal(sjl._);
+            expect(rbd.__).to.equal(sjl._);
+        });
     });
 
     describe ('#hasOpeningAndClosingDelim', function () {
