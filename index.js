@@ -9,7 +9,7 @@
         sjl = isNodeEnv ? require('sjljs') : window.sjl, __ = sjl._,
         valueOrDefault = sjl.valueOrDefault,
 
-        hasOpeningAndClosingDelim = sjl.curry4(function (content, openDelim, closingDelim, minDelimitedContentLen) {
+        hasOpeningAndClosingDelim = sjl.curry3(function (content, openDelim, closingDelim, minDelimitedContentLen) {
             minDelimitedContentLen = valueOrDefault(minDelimitedContentLen, 1, Number);
             return (content.indexOf(openDelim) > -1 ||
             content.indexOf(closingDelim) > (openDelim.length + minDelimitedContentLen));
